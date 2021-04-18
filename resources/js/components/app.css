@@ -1,0 +1,384 @@
+ListItem:hover{
+
+    background: "#efefef";
+
+}
+.center {
+margin: auto;
+width: 50%;
+max-width: 400px;
+min-width: 150px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+font-size: 20px;
+}
+div.loader {
+font-size: 100px;
+}
+.input_label{
+    font-size: 16px;
+    font-weight: bold;
+}
+/* label{
+width:100px;
+} */
+.hstyle{
+color: #525353;
+font-size: large;
+}
+/* width */
+::-webkit-scrollbar {
+width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+box-shadow: inset 0 0 5px grey;
+border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+/* background: #b9cced; */
+border-radius: 2px;
+}
+.absent{
+background-color: #ffacb7;
+}
+.present {
+background-color: #eafbea;
+}
+.dash_img{
+  width: 25px;
+}
+#landing .UserNavBar{
+    background-image:linear-gradient(to right, #0080a8 0%, #80e7ff 100%);
+    height: auto;
+    padding:0px;
+    position: fixed;
+    width:100%;
+    margin-top: 0% !important;
+}
+@font-face {
+  font-family: popinsbold;
+  src: url('/fonts/Poppins/Poppins-Bold.ttf');
+}
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('/fonts/Poppins/Poppins-Light.ttf');
+}
+@font-face {
+  font-family: poopinmediumt;
+  src: url('/fonts/Poppins/Poppins-Medium.ttf');
+}
+@font-face {
+    font-family: typobold;
+    src: url('/fonts/Grand.otf');
+  }
+  @font-face {
+    font-family: krona;
+    src: url('/fonts/krona.ttf');
+  }
+  @font-face {
+    font-family: varela;
+    src: url('/fonts/varela.otf');
+  }
+  @font-face {
+    font-family: spotick;
+    src: url('/fonts/spotik-font.ttf');
+  }
+  @font-face {
+    font-family: typoregular;
+    src: url('/fonts/typo-regular.otf');
+  }
+.varient_card{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.card-signin .card-body {
+  padding: 2rem;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+  background-color: #15D14F !important;
+  border:1px solid #15D14F !important;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group input {
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+.btn-google {
+  color: white;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white;
+  background-color: #3b5998;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+.spinner-border{
+  color:#34495e !important;
+  font-size: 6px;
+  width: 35px !important;
+  height: 35px !important;
+}
+.adminlogin{
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+/* .adminlogin input{
+  padding: 10px;
+} */
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+@media screen and (min-width:481px){
+  @keyframes fadeUpScale {
+      0% {
+          transform: translate(0,30%);
+          /* opacity: 0.7; */
+      }
+
+      100% {
+          transform: translate(0,0%);
+          /* opacity: 1; */
+      }
+    }
+  .animate_auth_modal{
+      -webkit-animation: fadeUpScale 0.5s;
+      animation: fadeUpScale 0.8s;
+      -moz-animation: fadeUpScale 0.8s;
+      -o-animation: fadeUpScale 0.8s;
+  }
+}
+.left_border{
+  border-left: 1px solid rgb(221, 221, 221);
+}
+@media screen and (max-width:480px){
+  @keyframes fadeUpScale {
+      0% {
+          opacity: 0.7;
+
+      }
+
+      100% {
+          opacity: 1;
+      }
+    }
+  .animate_auth_modal{
+      -webkit-animation: fadeUpScale 0.5s;
+      animation: fadeUpScale 0.8s;
+      -moz-animation: fadeUpScale 0.8s;
+      -o-animation: fadeUpScale 0.8s;
+  }
+}
+
+input , select , textarea{
+  border-radius: 1px !important;
+}
+select,textarea{
+  border-radius: 1px !important;
+}
+input:focus , select:focus , textarea:focus{
+  border: 1px solid #33AEFF !important;
+  box-shadow: none !important;
+}
+body{
+  font-family: Poppins-Regular !important;
+}
+html {
+  scroll-behavior: smooth !important;
+}
+.navb{
+  background-image:linear-gradient(to right, #0080a8 0%, #80e7ff 100%);
+  height: auto;
+    padding:0px;
+    /* position: fixed; */
+    width: 100%;
+}
+
+  #mob_bg{
+    display: none;
+  }
+  @media screen and (max-width:480px){
+    .demo_card_body{
+      margin-left: 0 !important;
+    }
+    #web_bg{
+      display: none !important;
+    }
+    #mob_bg{
+      display: block !important;
+    }
+  }
+  .card-body{
+    background-color: white;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  #inputbox{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    border-radius: .25rem;
+  }
+
+  #inputbox:hover,
+  #inputbox:active,
+  #inputbox:focus{
+    border-bottom: 2px solid rgb(34, 185, 245);
+
+  }
+  #inputbox1{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    border-radius: .25rem;
+  }
+
+  #inputbox1:hover,
+  #inputbox1:active,
+  #inputbox1:focus{
+    border-bottom: 2px solid rgb(34, 185, 245);
+
+  }
+  #change_pass_div{
+    margin-top: 10%;
+  }
+  @media only screen and (max-width: 480px) {
+    #displayspinner {
+      margin-left: 40% !important;
+      margin-top: 50% !important;
+    }
+
+  }
+
+.mob{
+  display:none
+}
+
+
+.main_div{
+  background-color: white;
+}
+.MuiToolbar-gutters{
+    padding-left: 8px !important;
+}
