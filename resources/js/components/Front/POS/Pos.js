@@ -229,6 +229,7 @@ class Pos extends Component {
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Stock</th>
+                                    <th>Price</th>
                                     <th>Select Qty.</th>
                                     <th colSpan="2">Actions</th>
                                 </tr>
@@ -243,6 +244,7 @@ class Pos extends Component {
                                                 <td>{data.name}</td>
                                                 <td>{data.category.name}</td>
                                                 <td>{data.stock}</td>
+                                                <td>{data.retail_price}</td>
                                                 <td>
                                                     <input value={data.qty || 0}  type="number" className="form-control" onChange={(e)=>{this.qty(e.target.value,index)}}></input>
                                                 </td>
