@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Front;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Invoice;
+use App\InvoiceProducts;
 use App\Product;
+use App\User;
 use Validator;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -121,6 +125,53 @@ class PosController extends Controller
                     ->limit(100)->with('category')->get();
 
         return $products;
+    }
+
+    public function save_invoice(Request $request){
+        $invoice = new Invoice();
+        $invoice->subtotal = $request->subtotal;
+        $invoice->grandtotal = $request->grandtotal;
+        $invoice->discount = $request->discount;
+        $invoice->date = date("Y-m-d");
+        $invoice->user_id = $request->user;
+        $invoice->save();
+        if(sizeof($request->invoice_products) > 0){
+            foreach($request->invoice_products as $product){
+                $InvoiceProduct = new InvoiceProducts();
+                $InvoiceProduct->product_id = $product['id'];
+                $InvoiceProduct->invoice_id = $invoice->id;
+                $InvoiceProduct->retail_price = $product['retail_price'];
+                $InvoiceProduct->qty = $product['qty'];
+                $InvoiceProduct->save();
+            }
+        }
+       return $invoice;
+    }
+    public function generate_invoice(Request $request){
+        $invoice = new Invoice();
+        $invoice->subtotal = $request->subtotal;
+        $invoice->grandtotal = $request->grandtotal;
+        $invoice->discount = $request->discount;
+        $invoice->date = date("Y-m-d");
+        $invoice->user_id = $request->user;
+        $invoice->save();
+        if(sizeof($request->invoice_products) > 0){
+            foreach($request->invoice_products as $product){
+                $InvoiceProduct = new InvoiceProducts();
+                $InvoiceProduct->product_id = $product['id'];
+                $InvoiceProduct->invoice_id = $invoice->id;
+                $InvoiceProduct->retail_price = $product['retail_price'];
+                $InvoiceProduct->qty = $product['qty'];
+                $InvoiceProduct->save();
+            }
+        }
+        $user = User::find($request->user);
+        view()->share('invoice',$invoice);
+        view()->share('user',$user);
+        view()->share('invoice_products',$request->invoice_products);
+        $pdf = PDF::loadView('Pdf/Invoice');
+        $pdf->setPaper('A5', 'portrait');
+        return $pdf->stream();
     }
     /**
      * Show the form for creating a new resource.

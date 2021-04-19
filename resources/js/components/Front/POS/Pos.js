@@ -13,7 +13,8 @@ class Pos extends Component {
             invoice_products:[],
             subtotal:0,
             grandtotal:0,
-            discount:0
+            discount:0,
+            loading:false
         }
     }
 
@@ -21,11 +22,11 @@ class Pos extends Component {
         let senderdata={
             user:this.props.user.id
         }
-        Axios.post('/api/get_all_products',senderdata).then(res=>{
-            this.setState({
-                products:res.data
-            })
-        })
+        // Axios.post('/api/get_all_products',senderdata).then(res=>{
+        //     this.setState({
+        //         products:res.data
+        //     })
+        // })
         Axios.post('/api/get_allcategories',senderdata).then(res=>{
             this.setState({
                 categories:res.data
@@ -44,12 +45,14 @@ class Pos extends Component {
             string:this.state.search_string,
             user:this.props.user.id
         }
-        Axios.post('/api/search_product',senderdata).then(res=>{
-            console.log(res.data);
-            this.setState({
-                products:res.data
+        if(this.state.search_string != ''){
+            Axios.post('/api/search_product',senderdata).then(res=>{
+                console.log(res.data);
+                this.setState({
+                    products:res.data
+                })
             })
-        })
+        }
     }
     qty(val,index){
        let temp_ = this.state.products;
@@ -121,6 +124,61 @@ class Pos extends Component {
             discount:val
         })
     }
+    generate_invoice(){
+        let payload = {
+            invoice_products:this.state.invoice_products,
+            subtotal:this.state.subtotal,
+            discount:this.state.discount,
+            grandtotal:this.state.grandtotal,
+            user:this.props.user.id,
+        }
+        this.setState({
+            loading:true
+        })
+        Axios.post('/api/generate_invoice',payload,{
+            responseType: 'blob'
+        }).then(response=>{
+            this.setState({
+                loading:false,
+                products:[],
+                invoice_products:[],
+                subtotal:0,
+                grandtotal:0,
+                discount:0,
+                search_string:''
+            })
+            const file = new Blob(
+                [response.data],
+                {type: 'application/pdf'});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+        })
+    }
+    save_invoice(){
+        let payload = {
+            invoice_products:this.state.invoice_products,
+            subtotal:this.state.subtotal,
+            discount:this.state.discount,
+            grandtotal:this.state.grandtotal,
+            user:this.props.user.id,
+        }
+
+        Axios.post('/api/save_invoice',payload).then(res=>{
+            this.setState({
+                products:[],
+                invoice_products:[],
+                subtotal:0,
+                grandtotal:0,
+                discount:0,
+                search_string:''
+            })
+            Swal.fire({
+                icon: 'success',
+                title: 'Invoice #'+res.data.id+" Saved SuccessFully.",
+                showConfirmButton: true,
+                })
+        })
+    }
     render() {
         return (
             <div className="row">
@@ -188,8 +246,19 @@ class Pos extends Component {
                             </div>
                             <div className=" row  mt-5 ">
                                             <h1 className="col-md-1"></h1>
-                                            <button   className=" ml-5 btn btn-success"><i className="fas fa-save"> </i> & <i className="fas fa-print"></i></button>
-                                            <button   className="btn btn-info ml-5"><i className="fas fa-save"> </i> Save</button>
+                                            <button  onClick={this.generate_invoice.bind(this)} className=" ml-5 btn btn-success">
+                                            {
+                                    this.state.loading ?
+                                    <div id="displayspinner" >
+                                    <div className="spinner-border small_loader  ml-2 spinner_format"  role="status">
+                                      <span className="sr-only">Loading...</span>
+                                    </div>
+                                  </div>
+                                  :<>
+                                    <i className="fas fa-save"> </i> & <i className="fas fa-print"></i></>
+                                }
+                                              </button>
+                                            <button  onClick={this.save_invoice.bind(this)}  className="btn btn-info ml-5"><i className="fas fa-save"> </i> Save</button>
                                 </div>
                         </div>
                     </div>
@@ -257,7 +326,7 @@ class Pos extends Component {
                                 }
                                 {
                                     this.state.products.length == 0 ?
-                                    <tr><td colSpan="8" className="text-center">No records founded</td></tr>:null
+                                    <tr><td colSpan="8" className="text-center">No records. Search Products to Add.</td></tr>:null
                                 }
                             </tbody>
                         </table>
