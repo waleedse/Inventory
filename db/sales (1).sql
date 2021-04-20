@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2021 at 08:41 PM
+-- Generation Time: Apr 20, 2021 at 08:52 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -131,7 +131,8 @@ INSERT INTO `invoices` (`id`, `subtotal`, `discount`, `grandtotal`, `date`, `use
 (42, 190, 30, 160, '2021-04-19', 9, '2021-04-19 12:33:57', '2021-04-19 12:33:57'),
 (43, 190, 30, 160, '2021-04-19', 9, '2021-04-19 12:34:26', '2021-04-19 12:34:26'),
 (44, 0, 0, 0, '2021-04-19', 9, '2021-04-19 12:48:04', '2021-04-19 12:48:04'),
-(45, 0, 0, 0, '2021-04-19', 9, '2021-04-19 12:48:21', '2021-04-19 12:48:21');
+(45, 0, 0, 0, '2021-04-19', 9, '2021-04-19 12:48:21', '2021-04-19 12:48:21'),
+(46, 0, 0, 0, '2021-04-20', 9, '2021-04-20 08:20:07', '2021-04-20 08:20:07');
 
 -- --------------------------------------------------------
 
@@ -393,7 +394,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `invoice_products`

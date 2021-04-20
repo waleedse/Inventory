@@ -10,6 +10,7 @@ import AdminLogin from './Admin/Auth/Login';
 import AdminIndex from './Admin/Index';
 import UserLogin from './Front/Auth/Login';
 import FrontIndex from './Front/Index';
+
 const store = createStore(reducer);
 function App() {
     return (

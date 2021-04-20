@@ -8,6 +8,7 @@ use App\Invoice;
 use App\InvoiceProducts;
 use App\Product;
 use App\User;
+use DateTime;
 use Validator;
 use PDF;
 use Illuminate\Http\Request;
@@ -172,6 +173,47 @@ class PosController extends Controller
         $pdf = PDF::loadView('Pdf/Invoice');
         $pdf->setPaper('A5', 'portrait');
         return $pdf->stream();
+    }
+    public function search_sales(Request $request){
+        $invoice = Invoice::where('user_id',$request->user_id)->get();
+        $sales = [];
+        $invoice_totals = 0;
+        $total_invoices = 0;
+        $filter_invoices = [];
+        foreach($invoice as $i){
+            if(new DateTime($request->startdate) <= new DateTime($i->date) &&  new DateTime($request->enddate) >= new DateTime($i->date)){
+                $invoice_totals = $invoice_totals + (int) $i->grandtotal;
+                $total_invoices = $total_invoices + 1;
+                $filter_invoices[] = $i;
+            }
+        }
+        if(sizeof($filter_invoices) > 0 ){
+            $response = ['status' => 200 , 'invoice_totals' => $invoice_totals , 'total_invoices' => $total_invoices , 'invoices' => $filter_invoices];
+            return $response;
+        }else{
+            $response = ['status' => 404 , 'invoices' => $filter_invoices];
+            return $response;
+        }
+    }
+    public function print_sales_report(Request $request){
+        $invoices = $this->search_sales($request);
+        $user = User::find($request->user_id);
+        $startdate = $request->startdate;
+        $enddate = $request->enddate;
+        $title = 'Invoices Sale Report';
+        view()->share('invoices',$invoices);
+        view()->share('startdate',$startdate);
+        view()->share('enddate',$enddate);
+        view()->share('title',$title);
+        view()->share('user',$user);
+        $pdf = PDF::loadView('Pdf/SalesReport');
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream();
+    }
+    public function get_invoice_by_id(Request $request){
+        $invoice = Invoice::where('id',$request->id)->first();
+        $invoice->invoice_products = InvoiceProducts::where('invoice_id',$request->id)->with('product')->get();
+        return $invoice;
     }
     /**
      * Show the form for creating a new resource.

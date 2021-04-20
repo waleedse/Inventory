@@ -39,3 +39,6 @@ Route::post('search_product','Front\PosController@search_product');
 
 Route::post('generate_invoice','Front\PosController@generate_invoice');
 Route::post('save_invoice','Front\PosController@save_invoice');
+Route::post('search_sales','Front\PosController@search_sales');
+Route::post('print_sales_report','Front\PosController@print_sales_report');
+Route::post('get_invoice_by_id','Front\PosController@get_invoice_by_id');

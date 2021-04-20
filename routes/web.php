@@ -21,6 +21,8 @@ Route::view('/pos/manage-category','welcome');
 Route::view('/pos/add-product','welcome');
 Route::view('/pos/edit-product/{id}','welcome');
 Route::view('/pos/products-list','welcome');
+Route::view('/pos/sales-report','welcome');
+Route::view('/pos/invoice-details/{id}','welcome');
 
 
 Route::view('/{path?}', 'welcome');

@@ -31,6 +31,8 @@ import Addproduct from './Manage Products/Addproduct';
 import ProductList from './Manage Products/ProductsList';
 import EditProduct from './Manage Products/EditProduct';
 import Pos from './POS/Pos';
+import SalesReport from './SalesReport/SalesReport';
+import InvoiceDetails from './SalesReport/InvoiceDetails';
 
 import Axios from 'axios';
 import { connect } from 'react-redux';
@@ -189,10 +191,10 @@ function Sidebar(props) {
 
 
             <>
-              <ListItem button component={Link} to="/pos/manage-category">
+              <ListItem button component={Link} to="/pos/sales-report">
 
                 <ListItemText >
-                  <h6 className={classes.ListItemstyles}><img className={classes.icon_img} src="/images/pos.png"></img> Sales Report</h6>
+                  <h6 className={classes.ListItemstyles}><img className={classes.icon_img} src="/images/inquiry.png"></img> Sales Report</h6>
                 </ListItemText>
               </ListItem>
               <Divider className={classes.Dividers} />
@@ -334,6 +336,8 @@ function Sidebar(props) {
               <Route path="/pos/edit-product/:id" component={EditProduct}></Route>
               <Route path="/pos/products-list" component={ProductList}></Route>
               <Route exact path="/pos" component={Pos}></Route>
+              <Route exact path="/pos/sales-report" component={SalesReport}></Route>
+              <Route exact path="/pos/invoice-details/:id" component={InvoiceDetails}></Route>
             </main>
           </div>
           :
