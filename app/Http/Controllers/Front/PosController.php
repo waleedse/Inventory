@@ -144,6 +144,9 @@ class PosController extends Controller
                 $InvoiceProduct->retail_price = $product['retail_price'];
                 $InvoiceProduct->qty = $product['qty'];
                 $InvoiceProduct->save();
+                $p = Product::find($product['id']);
+                $p->stock = $p->stock - (int) $product['qty'];
+                $p->save();
             }
         }
        return $invoice;
@@ -164,6 +167,9 @@ class PosController extends Controller
                 $InvoiceProduct->retail_price = $product['retail_price'];
                 $InvoiceProduct->qty = $product['qty'];
                 $InvoiceProduct->save();
+                $p = Product::find($product['id']);
+                $p->stock = $p->stock - (int) $product['qty'];
+                $p->save();
             }
         }
         $user = User::find($request->user);
@@ -215,6 +221,47 @@ class PosController extends Controller
         $invoice->invoice_products = InvoiceProducts::where('invoice_id',$request->id)->with('product')->get();
         return $invoice;
     }
+    public function get_admin_dash_data(Request $request){
+        $todays_invoices = Invoice::where('user_id',$request->user_id)->where('date',date("Y-m-d"))->get();
+        $sales = 0;
+        $revenue = 0;
+        if(sizeof($todays_invoices) > 0 ){
+            foreach($todays_invoices as $ti){
+                $sales = $sales + sizeof(InvoiceProducts::where('invoice_id',$ti->id)->get());
+                $revenue = $revenue + $ti->grandtotal;
+            }
+        }
+        $products = Product::where('user',$request->user_id)->get();
+        $o_dates = [];
+        $charorders = Invoice::orderBy('id', 'DESC')->where('user_id',$request->user_id)->limit(100)->get();
+        foreach($charorders as $o){
+          if(sizeof($o_dates) > 0){
+            $check = 0;
+            foreach($o_dates as $od){
+                if($od == $o->date){
+                    $check = 1;
+                }
+            }
+            if($check == 0){
+                array_push($o_dates,$o->date);
+            }
+          }else{
+            array_push($o_dates,$o->date);
+          }
+        }
+        $dates_invoices = [];
+        foreach($o_dates as $od){
+            $dates_invoices[] = sizeof(Invoice::where('date',$od)->where('user_id',$request->user_id)->get());
+        }
+
+        $response = ['todays_invoices' => sizeof($todays_invoices),
+        'todays_sales' => $sales , 'revenue' => $revenue ,
+        'dates' => $o_dates , 'date_invoices' => $dates_invoices,
+        'products' => sizeof($products)
+        ];
+        return $response;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

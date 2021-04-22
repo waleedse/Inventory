@@ -315,7 +315,7 @@ class Pos extends Component {
                                                 <td>{data.stock}</td>
                                                 <td>{data.retail_price}</td>
                                                 <td>
-                                                    <input value={data.qty || 0}  type="number" className="form-control" onChange={(e)=>{this.qty(e.target.value,index)}}></input>
+                                                    <input style={{width:'80px'}} value={data.qty || 0}  type="number" className="form-control" onChange={(e)=>{this.qty(e.target.value,index)}}></input>
                                                 </td>
                                                 <td>
                                                     <button onClick={this.AddToBucket.bind(this,data)} className="btn btn-outline-info"><i className="fas fa-plus-circle"></i></button>

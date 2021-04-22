@@ -42,3 +42,4 @@ Route::post('save_invoice','Front\PosController@save_invoice');
 Route::post('search_sales','Front\PosController@search_sales');
 Route::post('print_sales_report','Front\PosController@print_sales_report');
 Route::post('get_invoice_by_id','Front\PosController@get_invoice_by_id');
+Route::post('get_admin_dash_data','Front\PosController@get_admin_dash_data');
