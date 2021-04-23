@@ -19,11 +19,11 @@ class AuthController extends Controller
         $user = User::where('username',$request->username)->first();
         if($user){
             if($user->password == $request->password){
-                $users_meta = User_Meta::
+                $user_meta = User_Meta::
                         where('user_id',$user->id)
                         ->where('user_ip',$request->ip())
                         ->first();
-                        if(!$users_meta){
+                        if(!$user_meta){
                             $user_meta = new User_Meta();
                             $user_meta->token = Hash::make($user->id . time());
                             $user_meta->user_ip = $request->ip();
@@ -31,7 +31,7 @@ class AuthController extends Controller
                             $user_meta->token_validation = date("d-m-Y H:m:sa");
                             $user_meta->save();
                         }
-                        $user->token = $users_meta->token;
+                        $user->token = $user_meta->token;
                 $response = ['status' => 200 , 'msg' => 'Authentication Successfull.','user'=>$user];
                 return $response;
             }else{
