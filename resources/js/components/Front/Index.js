@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Sidebar(props) {
   const [display, setdisplay] = React.useState(false);
-  const [permissions, setdPermissions] = React.useState([]);
+  const [business_name, setdbusiness_name] = React.useState([]);
   const [user, setuser] = React.useState([]);
   const [check, setcheck] = React.useState(true);
   const logout = () =>{
@@ -138,6 +138,7 @@ function Sidebar(props) {
       console.log(res);
       if (res.data.status == 200) {
         setuser(res.data.user);
+        setdbusiness_name(res.data.user.shortname);
         props.changeUser(res.data.user);
         setdisplay(true);
       } else {
@@ -294,7 +295,7 @@ function Sidebar(props) {
                       {/* <img style={{ marginRight: '0px', marginBottom: '0px' , width:'40px' , height:'40px' }} src="/images/logo.png">
                       </img> */}
                       SALE SYSTEM
-                      </span> <span></span> </h2>
+                      </span>  <span className="ml-2 px-2" style={{borderLeft:'1px solid white',fontFamily:'sans-serif'}}> {business_name}</span> </h2>
                 </Typography>
               </Toolbar>
             </AppBar>
