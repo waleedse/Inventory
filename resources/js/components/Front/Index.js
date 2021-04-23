@@ -141,7 +141,7 @@ function Sidebar(props) {
         props.changeUser(res.data.user);
         setdisplay(true);
       } else {
-        props.history.push('/login');
+        props.history.push('/');
       }
     })
   }
