@@ -9,7 +9,8 @@ class ProductsList extends Component {
         this.state={
             products:[],
             search_string:'',
-            categories:[]
+            categories:[],
+            filteProducts:[]
         }
     }
 
@@ -17,9 +18,10 @@ class ProductsList extends Component {
         let senderdata={
             user:this.props.user.id
         }
-        Axios.post('/api/get_all_products',senderdata).then(res=>{
+        Axios.post('/api/get_user_product',senderdata).then(res=>{
             this.setState({
-                products:res.data
+                products:res.data,
+                filteProducts:res.data
             })
         })
         Axios.post('/api/get_allcategories',senderdata).then(res=>{
@@ -28,6 +30,21 @@ class ProductsList extends Component {
             })
         })
     }
+    filterList(e) {
+        let value  = e.target.value;
+            var updatedList = [];
+            var List = this.state.products;
+            for(var i=0;i<List.length;i++){
+            updatedList = List.filter(
+              (item) => Object.keys(item).some(key => item[key].toString().toUpperCase().search(value.toUpperCase()) !== -1)
+            );
+
+            }
+
+              this.setState({
+                filteProducts: updatedList,
+            });
+      }
     DeleteProduct(id,i){
         let senderdata={
             id:id
@@ -71,23 +88,20 @@ class ProductsList extends Component {
                             <div class="form-group input_div col-md-12">
                                 <div className="row mb-2">
                                     <div className="col-md-6">
-                                        <input type="email" onChange={this.search.bind(this)} class="form-control ml-1 mt-2"
+                                        <input type="email" onChange={this.filterList.bind(this)} class="form-control ml-1 mt-2"
                                         aria-describedby="emailHelp" placeholder="Search by Id, code, Name" />
                                     </div>
                                     <div class="form-group input_div col-md-6 mt-2">
-                                        <select onChange={this.search.bind(this)} type="email" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp"  >
-                                            <option value="">..Choose Category..</option>
+                                        <select onChange={this.filterList.bind(this)} type="email" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp"  >
+                                            <option value="">--Choose Category--</option>
                                             {
                                                 this.state.categories.map((data,index)=>{
                                                     return(
-                                                    <option key={index} value={data.id}>{data.name}</option>
+                                                    <option key={index} value={data.id}>{data.cname}</option>
                                                     )
                                                 })
                                             }
                                         </select>
-                                    </div>
-                                    <div className="col-md-2 ml-1">
-                                        <button onClick={this.search_products.bind(this)} className="btn btn-success ml-1 mt-2">Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -108,13 +122,13 @@ class ProductsList extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    this.state.products.map((data,index)=>{
+                                    this.state.filteProducts.map((data,index)=>{
                                         return(
                                             <tr key={index}>
                                                 <td>{index+1}</td>
                                                 <td>{data.id}</td>
                                                 <td>{data.name}</td>
-                                                <td>{data.category.name}</td>
+                                                <td>{data.cname}</td>
                                                 <td>{data.stock}</td>
                                                 <td className={data.enabled == 1 ? 'text-success' : 'text-danger'} >{data.enabled == 1 ? 'Enabled' : 'Disabled'}</td>
                                                 <td>
@@ -127,7 +141,7 @@ class ProductsList extends Component {
                                     })
                                 }
                                 {
-                                    this.state.products.length == 0 ?
+                                    this.state.filteProducts.length == 0 ?
                                     <tr><td colSpan="8">No records founded</td></tr>:null
                                 }
                             </tbody>

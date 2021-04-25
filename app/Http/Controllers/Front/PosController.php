@@ -23,14 +23,14 @@ class PosController extends Controller
      */
     public function addcategory(Request $request){
         $new_cat = new Category();
-        $new_cat->name = $request->name;
+        $new_cat->cname = $request->name;
         $new_cat->user = $request->user;
         $new_cat->save();
     }
 
     public function update_category(Request $request){
         $up_cat = Category::find($request->id);
-        $up_cat->name = $request->name;
+        $up_cat->cname = $request->name;
         $up_cat->save();
     }
 
@@ -117,13 +117,13 @@ class PosController extends Controller
         $response = ['status' => 200 , 'msg' => 'Product Updated SuccessFully.'];
         return $response;
     }
-    public function search_product(Request $request){
-        $products = Product::where('id', 'like', '%' .$request->string. '%')
-                    ->where('user', $request->user)
-                    ->orWhere('code', 'like', '%' . $request->string . '%')
-                    ->orWhere('name', 'like', '%' . $request->string . '%')
-                    ->orWhere('category_id', 'like', '%' . $request->string . '%')
-                    ->limit(100)->with('category')->get();
+    public function get_user_product(Request $request){
+        $products = DB::table('products')->
+        join('categories','products.category_id' ,'=','categories.id')
+        ->where('products.user', $request->user)
+        ->select('products.id','products.name','products.category_id','products.retail_price'
+        ,'products.stock','products.qty','products.enabled','categories.cname')
+        ->get();
 
         return $products;
     }

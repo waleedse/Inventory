@@ -14,7 +14,8 @@ class Pos extends Component {
             subtotal:0,
             grandtotal:0,
             discount:0,
-            loading:false
+            loading:false,
+            filterproducts:[]
         }
     }
 
@@ -22,17 +23,39 @@ class Pos extends Component {
         let senderdata={
             user:this.props.user.id
         }
-        // Axios.post('/api/get_all_products',senderdata).then(res=>{
-        //     this.setState({
-        //         products:res.data
-        //     })
-        // })
+        Axios.post('/api/get_user_product',senderdata).then(res=>{
+            this.setState({
+                products:res.data
+            })
+        })
         Axios.post('/api/get_allcategories',senderdata).then(res=>{
             this.setState({
                 categories:res.data
             })
         })
     }
+    filterList(e) {
+        let value  = e.target.value;
+        if(value != ''){
+            var updatedList = [];
+            var List = this.state.products;
+            for(var i=0;i<List.length;i++){
+            updatedList = List.filter(
+              (item) => Object.keys(item).some(key => item[key].toString().toUpperCase().search(value.toUpperCase()) !== -1)
+            );
+
+            }
+
+              this.setState({
+                filterproducts: updatedList,
+            });
+        }else{
+            this.setState({
+                filterproducts:[]
+            })
+        }
+
+      }
     search(e){
         this.setState({
             search_string:e.target.value
@@ -184,7 +207,7 @@ class Pos extends Component {
             <div className="row">
                 <div className="col-md-6 " style={{background:'#f7f7f7'}}>
                     <h2 className="text-center">Invoice Bucket</h2>
-                    <div style={{height:'350px'}} className="card card-signin my-3 animate_auth_modal">
+                    <div style={{height:'350px'}} className="card card-signin my-3 p-3 animate_auth_modal">
                     {
                         this.state.invoice_products.length > 0 ?
                     <table className="table table-hover table-light table-bordered table-striped">
@@ -267,16 +290,16 @@ class Pos extends Component {
                 <div class="form-group">
                                 <div className="row mb-2">
                                     <div className="col-md-6">
-                                        <input autoFocus type="email" onChange={this.search.bind(this)} class="form-control ml-1 mt-2"
+                                        <input autoFocus type="email" onChange={this.filterList.bind(this)} class="form-control ml-1 mt-2"
                                         aria-describedby="emailHelp" placeholder="Search by Id, code, Name" />
                                     </div>
                                     <div class="form-group input_div col-md-6 mt-2">
-                                        <select onChange={this.search.bind(this)} type="email" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp"  >
-                                            <option value="">..Choose Category..</option>
+                                        <select onChange={this.filterList.bind(this)} type="email" class="form-control " id="exampleInputEmail1" aria-describedby="emailHelp"  >
+                                            <option value="">--Choose Category--</option>
                                             {
                                                 this.state.categories.map((data,index)=>{
                                                     return(
-                                                    <option key={index} value={data.id}>{data.name}</option>
+                                                    <option key={index} value={data.id}>{data.cname}</option>
                                                     )
                                                 })
                                             }
@@ -305,13 +328,13 @@ class Pos extends Component {
                             </thead>
                             <tbody>
                                 {
-                                    this.state.products.map((data,index)=>{
+                                    this.state.filterproducts.map((data,index)=>{
                                         return(
                                             <tr key={"ind"+index}>
                                                 <td>{index+1}</td>
                                                 <td>{data.id}</td>
                                                 <td>{data.name}</td>
-                                                <td>{data.category.name}</td>
+                                                <td>{data.cname}</td>
                                                 <td>{data.stock}</td>
                                                 <td>{data.retail_price}</td>
                                                 <td>

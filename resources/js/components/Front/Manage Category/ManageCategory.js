@@ -56,7 +56,7 @@ class AddCategory extends Component {
     let temp_arr = this.state.categories;
     temp_arr.map((data,index)=>{
         if(data.id == id){
-            data.name = val;
+            data.cname = val;
         }
     })
     this.setState({
@@ -142,8 +142,8 @@ class AddCategory extends Component {
                                             <tr>
                                                 <td>{index+1}</td>
                                                 <td>{data.id}</td>
-                                                <td><input onChange={(e)=>{this.onchange_category(e.target.value,data.id)}} className="form-control" value={data.name}></input></td>
-                                                <td><button onClick={this.upcategory.bind(this,data.id,data.name)} className="btn btn-warning">Update</button></td>
+                                                <td><input onChange={(e)=>{this.onchange_category(e.target.value,data.id)}} className="form-control" value={data.cname}></input></td>
+                                                <td><button onClick={this.upcategory.bind(this,data.id,data.cname)} className="btn btn-warning">Update</button></td>
                                                 <td><button className="btn btn-light" onClick={this.DeleteCategory.bind(this,data.id,index)}> <i  style={{color:'red'}}  className="fas fa-trash-alt"></i>
                                                         </button></td>
                                             </tr>

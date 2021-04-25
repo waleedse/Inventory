@@ -190,7 +190,7 @@ class Addproduct extends Component {
                                    {
                                        this.state.categories.map((data,index)=>{
                                            return(
-                                           <option key={index} value={data.id}>{data.name}</option>
+                                           <option key={index} value={data.id}>{data.cname}</option>
                                            )
                                        })
                                    }

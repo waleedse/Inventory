@@ -35,7 +35,7 @@ Route::post('add_product','Front\PosController@add_product');
 Route::post('get_all_products','Front\PosController@get_all_products');
 Route::post('get_product_by_id','Front\PosController@get_product_by_id');
 Route::post('update_product','Front\PosController@update_product');
-Route::post('search_product','Front\PosController@search_product');
+Route::post('get_user_product','Front\PosController@get_user_product');
 
 Route::post('generate_invoice','Front\PosController@generate_invoice');
 Route::post('save_invoice','Front\PosController@save_invoice');
