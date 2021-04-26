@@ -78,14 +78,14 @@ class Pos extends Component {
         }
     }
     qty(val,index){
-       let temp_ = this.state.products;
+       let temp_ = this.state.filterproducts;
        temp_.map((data,ind)=>{
            if(index == ind){
                data.qty = val;
            }
        })
         this.setState({
-            products:temp_
+            filterproducts:temp_
         },function(){
             this.calculate_totals();
         })
@@ -127,6 +127,8 @@ class Pos extends Component {
         temp.splice(index,1);
         this.setState({
             invoice_products:temp
+        },function(){
+            this.calculate_totals();
         })
     }
     calculate_totals(){
